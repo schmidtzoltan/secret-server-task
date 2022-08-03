@@ -1,0 +1,26 @@
+version: "3.1"
+services:
+
+    db:
+      image: mariadb:latest
+      restart: always
+      expose:
+        - "3306"
+      ports:
+        - "3306:3306"
+      env_file:
+        - .env
+
+    backend:
+      build: devops/docker
+      restart: always
+      ports:
+        - "80:80"
+      volumes:
+        - ./devops/conf:/usr/local/etc/php
+        - ./src:/var/www/html
+      depends_on:
+        - db
+
+      
+
