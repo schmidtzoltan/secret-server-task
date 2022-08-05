@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300&display=swap');
+
+html {
+    background-color: #28292a;
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+body, input, textarea, select, button {
+    border-color: #5d5d5d;
+    color: #b5b5b5;
+}
+
+h1 {
+    border-bottom: solid #5d5d5d 3px;
+}
+
+h2 {
+    border-bottom: dashed #5d5d5d 2px;
+}
+
+h3 {
+    border-bottom: dashed #383838 1px;
+}
+
+a {
+    color: #0081b9;  
+}
