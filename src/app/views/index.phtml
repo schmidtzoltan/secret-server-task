@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -12,11 +11,19 @@
 
         <p>This is an API server of a secret service. You can save your secret by using the API. You can restrict the access of a secret after the certain number of views or after a certain period of time.</p>
 
-        <h2>POST /secret</h2>
+        <h2>Endpoints</h2>
+        <h3>POST /secret</h3>
         <p>Add a new secret</p>
 
-        <h2>GET /secret/{hash}</h2>
+        <h3>GET /secret/{hash}</h3>
         <p>Find a secret by hash</p>
+
+        <h2>How to setup</h2>
+        <p>To build and start: <code>bash manage.sh start</code></p>
+        <p>Then you need to initialize the database:</p>
+        <p><code>bash manage.sh enter db</code></p>
+        <p><code>bash migrations/migrate.sh 0000</code></p>
+        <p>You can use <code>reset</code> instead of <code>0000</code> to start again with an empty database.</p>
     </body>
 
 </html>

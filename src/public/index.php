@@ -1,5 +1,6 @@
 <?php
 
+use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\Application;
@@ -38,6 +39,18 @@ $di->set(
         $url->setBaseUri('/');
 
         return $url;
+    }
+);
+$di->set(
+    'db',
+    function () {
+        return new Mysql([
+            'host'     => 'db', // same as name in docker-compose
+            'port'     => '3306',
+            'username' => getenv('MYSQL_USER'),
+            'password' => getenv('MYSQL_PASSWORD'),
+            'dbname'   => getenv('MYSQL_DATABASE'),
+        ]);
     }
 );
 
