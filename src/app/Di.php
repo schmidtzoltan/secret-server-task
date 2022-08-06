@@ -5,6 +5,10 @@ namespace Project;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Di\FactoryDefault;
+use Phalcon\Events\Manager;
+use Phalcon\Http\Response;
+use Phalcon\Mvc\Dispatcher;
+use Phalcon\Mvc\Router;
 use Phalcon\Mvc\View;
 use Phalcon\Url;
 
@@ -47,6 +51,27 @@ class Di extends FactoryDefault {
                 ]);
             }
         );
+        $this->set('eventsManager', function() {
+            $eventsManager = new Manager();
+
+            return $eventsManager;
+        });
+        $this->set('router', function () {
+            $router = new Router();
+
+            return $router;
+        });
+        $this->set('dispatcher', function () {
+            $eventsManager = $this->getShared('eventsManager');
+
+            $dispatcher = new Dispatcher();
+
+            $dispatcher->setEventsManager($eventsManager);
+            //$dispatcher->setDefaultNamespace('Project\\Controller');
+
+            return $dispatcher;
+        });
+        $this->set('response', new Response());
     }
 
     public function getConfig(): ConfigIni
