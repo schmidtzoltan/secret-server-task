@@ -1,66 +1,13 @@
 <?php
 
-use Phalcon\Db\Adapter\Pdo\Mysql;
-use Phalcon\Di\FactoryDefault;
-use Phalcon\Loader;
-use Phalcon\Mvc\Application;
-use Phalcon\Mvc\View;
-use Phalcon\Url;
 
 // path constants
-define('BASE_PATH', dirname(__DIR__));
-define('APP_PATH', BASE_PATH . '/app');
+define('BASE_PATH', realpath(".."));
+define("APP_PATH", BASE_PATH . "/app");
+define("CONFIG_PATH", APP_PATH . "/config");
 
-$directories = [
-    APP_PATH . '/controllers/',
-    APP_PATH . '/models/',
-];
+require_once APP_PATH . "/System.php";
 
-// loader
-$loader = new Loader();
-$loader->registerDirs($directories);
-$loader->register();
+$system = new Project\System();
 
-// dependency injector
-$di = new FactoryDefault();
-$di->set(
-    'view',
-    function () {
-        $view = new View();
-        $view->setViewsDir(APP_PATH . '/views/');
-
-        return $view;
-    }
-);
-$di->set(
-    'url',
-    function () {
-        $url = new Url();
-        $url->setBaseUri('/');
-
-        return $url;
-    }
-);
-$di->set(
-    'db',
-    function () {
-        return new Mysql([
-            'host'     => 'db', // same as name in docker-compose
-            'port'     => '3306',
-            'username' => getenv('MYSQL_USER'),
-            'password' => getenv('MYSQL_PASSWORD'),
-            'dbname'   => getenv('MYSQL_DATABASE'),
-        ]);
-    }
-);
-
-// application handler
-$application = new Application($di);
-
-// request handling
-try {
-    $response = $application->handle($_SERVER["REQUEST_URI"]);
-    $response->send();
-} catch (\Exception $e) {
-    echo 'Exception: ', $e->getMessage();
-}
+$system->start();
